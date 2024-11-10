@@ -51,7 +51,7 @@ def getComicName(name: str, format: str):
     comicPress = None
 
     if comicInfo.get('infobox') != None:
-        for i in comicInfo.get('infobox'):
+        for i in comicInfo['infobox']:
             if i['key'] == '作者' and comicAuthor == None:
                 comicAuthor = i['value']
         for i in comicInfo['infobox']:
