@@ -2,18 +2,24 @@
 
 import os
 import json
+import logging
 import requests
 import argparse
 
-parser = argparse.ArgumentParser(description = '自动重命名本地漫画文件')
+parser = argparse.ArgumentParser(description = 'Automaticly rename your comics')
 
-parser.add_argument('path', help = '本地文件夹位置')
-parser.add_argument('-f', '--format', default = '{namecn} - {author} - {press}', help = '命名方式，可使用 {name}, {namecn}, {author}, {press} 进行替换')
+parser.add_argument('path')
+parser.add_argument('-f', '--format', default = '{namecn} - {author} - {press}')
+parser.add_argument('-v', '--verbose', action = 'store_true')
 
 args = parser.parse_args()
 
 path = args.path
 format = args.format
+if args.verbose == True:
+    logging.basicConfig(format = '%(asctime)s %(filename)s %(levelname)s - %(message)s', level = logging.DEBUG)
+else:
+    logging.basicConfig(format = '%(asctime)s %(filename)s %(levelname)s - %(message)s', level = logging.INFO)
 
 userAgent = 'kierankihn/comic-renamer/0.0.1 (https://github.com/kierankihn/comic-renamer)'
 httpHeaders = { 'User-agent': userAgent, 'Content-Type': 'application/json', 'accept': 'application/json' }
@@ -75,6 +81,7 @@ for oldPath in os.listdir(path):
     try:
         newPath = getComicName(oldPath, format)
         if newPath != None:
+            logging.info(f'Renamed {oldPath} into {newPath}')
             os.rename(os.path.join(path, oldPath), os.path.join(path, newPath))
     except BaseException as e:
-        print(e)
+        logging.error(e)
