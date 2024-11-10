@@ -8,7 +8,7 @@ import argparse
 parser = argparse.ArgumentParser(description = '自动重命名本地漫画文件')
 
 parser.add_argument('path', help = '本地文件夹位置')
-parser.add_argument('-f', '--format', default = '{namecn} - {author} - {press}', help = '命名方式')
+parser.add_argument('-f', '--format', default = '{namecn} - {author} - {press}', help = '命名方式，可使用 {name}, {namecn}, {author}, {press} 进行替换')
 
 args = parser.parse_args()
 
@@ -72,6 +72,9 @@ def getComicName(name: str, format: str):
     return format
 
 for oldPath in os.listdir(path):
-    newPath = getComicName(oldPath, format)
-    if newPath != None:
-        os.rename(os.path.join(path, oldPath), os.path.join(path, newPath))
+    try:
+        newPath = getComicName(oldPath, format)
+        if newPath != None:
+            os.rename(os.path.join(path, oldPath), os.path.join(path, newPath))
+    except BaseException as e:
+        print(e)
