@@ -98,7 +98,11 @@ def rename_comics(path: str, format_str: str) -> None:
             if new_name:
                 old_path = os.path.join(path, old_name)
                 new_path = os.path.join(path, new_name)
+
+                if not os.path.exists(os.path.dirname(new_path)):
+                    os.makedirs(os.path.dirname(new_path))
                 os.rename(old_path, new_path)
+
                 logging.info(f'Renamed {old_name} into {new_name}')
             else:
                 logging.warning(f'Failed to rename {old_name} due to not found')
