@@ -6,10 +6,10 @@ import logging
 import requests
 import argparse
 
-parser = argparse.ArgumentParser(description = 'Automaticly rename your comics')
+parser = argparse.ArgumentParser(description = 'Automatically rename your comics')
 
 parser.add_argument('path')
-parser.add_argument('-f', '--format', default = '{namecn} - {author} - {press}')
+parser.add_argument('-f', '--format', default = '{namecn} {author}')
 parser.add_argument('-v', '--verbose', action = 'store_true')
 
 args = parser.parse_args()
