@@ -8,6 +8,8 @@
 
 由于每次重命名都需要请求两次 Bangumi 的相关 API，可能重命名速度会很慢
 
+当前由于 Bangumi 的 API 在未搜索到信息的时候可能会返回 API 速率限制错误（see https://github.com/bangumi/api/issues/43），所以你看到的程序抛出的 rate error 可能并不是真的速率限制，而是没有搜索到信息
+
 使用之前请确保已经安装 Python 和需要的依赖
 
 ## 用法
