@@ -55,38 +55,28 @@ def get_comic_name(name: str, format_str: str) -> Optional[str]:
     Generate the new comic name based on the provided format.
     """
     comic_info = get_comic_info(name)
+
     if not comic_info:
         return None
 
-    comic_name = comic_info.get('name')
-    comic_name_cn = comic_info.get('name_cn')
-    comic_author = None
-    comic_press = None
+    base_info = {
+        'name': comic_info.get('name'),
+        'namecn': comic_info.get('name_cn'),
+        'author': None,
+        'press': None
+    }
+    comic_infobox = comic_info.get('infobox', [])
 
-    if comic_info.get('infobox'):
-        for item in comic_info['infobox']:
-            if item['key'] == '作者' and comic_author == None:
-                comic_author = item['value']
-        for item in comic_info['infobox']:
-            if item['key'] == '作画' and comic_author == None:
-                comic_author = item['value']
-        for item in comic_info['infobox']:
-            if item['key'] == '原作' and comic_author == None:
-                comic_author = item['value']
-        for item in comic_info['infobox']:
-            if item['key'] == '出版社' and comic_press == None:
-                comic_press = item['value']
+    for item in comic_infobox:
+        if item['key'] == '作者':
+            base_info['author'] = item['value']
+        if item['key'] == '出版社':
+            base_info['press'] = item['value']
 
-    if (not comic_name and '{name}' in format_str) or \
-       (not comic_name_cn and '{namecn}' in format_str) or \
-       (not comic_author and '{author}' in format_str) or \
-       (not comic_press and '{press}' in format_str):
+    if any(value is None and key in format_str for key, value in base_info.items()):
         return None
 
-    return format_str.replace('{name}', comic_name or '') \
-                     .replace('{namecn}', comic_name_cn or '') \
-                     .replace('{author}', comic_author or '') \
-                     .replace('{press}', comic_press or '')
+    return format_str.format(**base_info)
 
 def rename_comics(path: str, format_str: str) -> None:
     """
