@@ -31,7 +31,7 @@ def get_bangumi_api(path: str) -> Dict:
     """
     url = f'https://api.bgm.tv{path}'
     headers = {
-        'User-agent': 'kierankihn/comic-renamer/1.0.0 (https://github.com/kierankihn/comic-renamer)',
+        'User-agent': 'kierankihn/comic-renamer/1.1.0-rc1 (https://github.com/kierankihn/comic-renamer)',
         'Content-Type': 'application/json',
         'accept': 'application/json'
     }
