@@ -39,6 +39,8 @@ def main_gui():
         if not format_str:
             messagebox.showerror("Error", "Please enter a format.")
             return
+        
+        setup_logging(verbose_var, log_text)
 
         # Disable the start button to prevent multiple threads
         start_button.config(state=tk.DISABLED)
@@ -56,6 +58,7 @@ def main_gui():
     folder_path = tk.StringVar()
     format_str = tk.StringVar(value='{namecn} {author}')
     progress_var = tk.DoubleVar()
+    verbose_var = tk.BooleanVar(value=False)
 
     tk.Label(root, text="Directory:").grid(row=0, column=0, padx=10, pady=10, sticky='w')
     tk.Entry(root, textvariable=folder_path, width=50).grid(row=0, column=1, padx=10, pady=10, sticky='ew')
@@ -65,16 +68,16 @@ def main_gui():
     format_entry = tk.Entry(root, textvariable=format_str, width=50)
     format_entry.grid(row=1, column=1, padx=10, pady=10, sticky='ew')
 
-    start_button = tk.Button(root, text="Start Renaming", command=start_renaming, width=15, height=1)
-    start_button.grid(row=2, column=1, padx=10, pady=10, sticky='')
+    tk.Checkbutton(root, text="Show More Logs", variable=verbose_var).grid(row=2, column=0, padx=10, pady=10, sticky='w')
+
+    start_button = tk.Button(root, text="Start Renaming", command=start_renaming, width=15, height=1, anchor="center")
+    start_button.grid(row=3, column=0, columnspan=3, padx=10, pady=10, sticky='nsew')
 
     progress_bar = ttk.Progressbar(root, variable=progress_var, maximum=100)
-    progress_bar.grid(row=3, column=0, columnspan=3, padx=10, pady=10, sticky='ew')
+    progress_bar.grid(row=4, column=0, columnspan=3, padx=10, pady=10, sticky='ew')
 
     log_text = tk.Text(root, height=10, width=60)
-    log_text.grid(row=4, column=0, columnspan=3, padx=10, pady=10, sticky='nsew')
-    
-    setup_logging(False, log_text)
+    log_text.grid(row=5, column=0, columnspan=3, padx=10, pady=10, sticky='nsew')
 
     # Make columns and rows expandable
     root.columnconfigure(1, weight=1)
