@@ -46,19 +46,20 @@ def main_gui():
         start_button.config(state=tk.DISABLED)
 
         # Start the renaming process in a separate thread
-        threading.Thread(target=lambda: rename_comics(path, format_str, progress_var, progress_bar, enable_start_button)).start()
+        threading.Thread(target=lambda: rename_comics(path, format_str, use_tw_press_var, progress_var, progress_bar, enable_start_button)).start()
 
     def enable_start_button():
         start_button.config(state=tk.NORMAL)
 
     root = tk.Tk()
     root.title("Comic Renamer")
-    root.geometry("600x400")  # Set initial window size
+    root.geometry("600x440")  # Set initial window size
 
     folder_path = tk.StringVar()
     format_str = tk.StringVar(value='{namecn} {author}')
     progress_var = tk.DoubleVar()
     verbose_var = tk.BooleanVar(value=False)
+    use_tw_press_var = tk.BooleanVar(value=False)
 
     tk.Label(root, text="Directory:").grid(row=0, column=0, padx=10, pady=10, sticky='w')
     tk.Entry(root, textvariable=folder_path, width=50).grid(row=0, column=1, padx=10, pady=10, sticky='ew')
@@ -69,15 +70,16 @@ def main_gui():
     format_entry.grid(row=1, column=1, padx=10, pady=10, sticky='ew')
 
     tk.Checkbutton(root, text="Show More Logs", variable=verbose_var).grid(row=2, column=0, padx=10, pady=10, sticky='w')
+    tk.Checkbutton(root, text="Use Taiwan Press Info", variable=use_tw_press_var).grid(row=3, column=0, padx=10, pady=10, sticky='w')
 
     start_button = tk.Button(root, text="Start Renaming", command=start_renaming, width=15, height=1, anchor="center")
-    start_button.grid(row=3, column=0, columnspan=3, padx=10, pady=10, sticky='nsew')
+    start_button.grid(row=4, column=0, columnspan=3, padx=10, pady=10, sticky='nsew')
 
     progress_bar = ttk.Progressbar(root, variable=progress_var, maximum=100)
-    progress_bar.grid(row=4, column=0, columnspan=3, padx=10, pady=10, sticky='ew')
+    progress_bar.grid(row=5, column=0, columnspan=3, padx=10, pady=10, sticky='ew')
 
     log_text = tk.Text(root, height=10, width=60)
-    log_text.grid(row=5, column=0, columnspan=3, padx=10, pady=10, sticky='nsew')
+    log_text.grid(row=6, column=0, columnspan=3, padx=10, pady=10, sticky='nsew')
 
     # Make columns and rows expandable
     root.columnconfigure(1, weight=1)
