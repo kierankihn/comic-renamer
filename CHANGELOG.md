@@ -1,3 +1,13 @@
+## v1.2.0 (2024-11-22)
+
+### Feat
+
+- add verbose logs config
+
+### Refactor
+
+- refactored gui part
+
 ## v1.1.0 (2024-11-17)
 
 ## v1.1.0-rc1 (2024-11-16)
