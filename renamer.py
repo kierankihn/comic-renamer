@@ -6,7 +6,7 @@ from typing import  List, Dict, Optional
 import tkinter as tk
 from tkinter import ttk
 
-__VERSION__ = '1.2.0'
+__VERSION__ = '1.3.0'
 
 def get_tw_press(path: str) -> Optional[List]:
     """
