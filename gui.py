@@ -20,7 +20,7 @@ def setup_logging(verbose: bool, log_text: tk.Text) -> None:
             self.text.insert(tk.END, msg + '\n')
             self.text.yview(tk.END)  # Auto-scroll to the bottom
 
-    logging.basicConfig(format='%(asctime)s %(filename)s %(levelname)s - %(message)s', level=logging.INFO if verbose else logging.WARN, handlers = [TextHandler(log_text)])
+    logging.basicConfig(format='%(asctime)s %(filename)s %(levelname)s - %(message)s', level=logging.DEBUG if verbose else logging.INFO, handlers = [TextHandler(log_text)])
 
 def main_gui():
     """
@@ -33,6 +33,8 @@ def main_gui():
     def start_renaming():
         path = folder_path.get()
         format_str = format_entry.get()
+        use_tw_press = use_tw_press_var.get()
+        verbose = verbose_var.get()
         if not path:
             messagebox.showerror("Error", "Please select a directory.")
             return
@@ -40,13 +42,13 @@ def main_gui():
             messagebox.showerror("Error", "Please enter a format.")
             return
         
-        setup_logging(verbose_var, log_text)
+        setup_logging(verbose, log_text)
 
         # Disable the start button to prevent multiple threads
         start_button.config(state=tk.DISABLED)
 
         # Start the renaming process in a separate thread
-        threading.Thread(target=lambda: rename_comics(path, format_str, use_tw_press_var, progress_var, progress_bar, enable_start_button)).start()
+        threading.Thread(target=lambda: rename_comics(path, format_str, use_tw_press, progress_var, progress_bar, enable_start_button)).start()
 
     def enable_start_button():
         start_button.config(state=tk.NORMAL)

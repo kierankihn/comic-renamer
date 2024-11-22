@@ -89,6 +89,8 @@ def rename_comics(path: str, format_str: str, use_tw_press : bool, progress_var:
     """
     files = os.listdir(path)
 
+    logging.info(f'Start renaming {len(files)} files in {path} with format {format_str}')
+
     for i, old_name in enumerate(files):
         try:
             new_name = get_comic_name(old_name, format_str, use_tw_press)
@@ -100,7 +102,7 @@ def rename_comics(path: str, format_str: str, use_tw_press : bool, progress_var:
                     os.makedirs(os.path.dirname(new_path))
                 os.rename(old_path, new_path)
 
-                logging.info(f'Renamed {old_name} into {new_name}')
+                logging.debug(f'Renamed {old_name} into {new_name}')
             else:
                 logging.warning(f'Failed to rename {old_name} due to not found')
         except Exception as e:
@@ -109,5 +111,7 @@ def rename_comics(path: str, format_str: str, use_tw_press : bool, progress_var:
         # Update progress bar
         progress_var.set((i + 1) / len(files) * 100)
         progress_bar.update()
+
+    logging.info('Done')
 
     callback()
