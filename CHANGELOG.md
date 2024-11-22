@@ -1,3 +1,9 @@
+## v1.3.0 (2024-11-22)
+
+### Feat
+
+- add taiwan press config
+
 ## v1.2.0 (2024-11-22)
 
 ### Feat
