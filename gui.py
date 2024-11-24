@@ -56,6 +56,7 @@ def main_gui():
     root = tk.Tk()
     root.title("Comic Renamer")
     root.geometry("600x440")  # Set initial window size
+    root.resizable(False, False)
 
     folder_path = tk.StringVar()
     format_str = tk.StringVar(value='{namecn} {author}')

@@ -1,3 +1,9 @@
+## v1.3.2 (2024-11-24)
+
+### Fix
+
+- set gui windows unresizable
+
 ## v1.3.1 (2024-11-22)
 
 ### Fix
