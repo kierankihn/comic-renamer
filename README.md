@@ -14,29 +14,13 @@
 
 ## 用法
 
-```
-usage: main.py [-h] [-f FORMAT] path
+目前已有 GUI 版本（原谅我第一次用 Python 写 GUI 写的很难看）
 
-自动重命名本地漫画文件
+新版本增加了是否使用台版出版社的选项，默认不使用，勾选之后会增加本地 `data.json` 文件中的出版社的权重，默认写了 12 个出版社（[数据来源](https://bgm.tv/index/58593)），可以自行修改 / 添加你想要的出版社
 
-positional arguments:
-  path                  本地文件夹位置
+你可以勾选 `Show More Logs` 选项来开启 `DEBUG` 日志，开启后会输出网络日志和重命名的日志
 
-options:
-  -h, --help            show this help message and exit
-  -f FORMAT, --format FORMAT
-                        命名方式，可使用 {name}, {namecn}, {author}, {press} 进行替换
-```
-
-例子：
-
-```
-./main.py /path/to/folder -f '{namecn} {author}'
-```
-
-这会将指定目录下的所有**可以在 bgm.tv 上搜索到的**漫画（文件 / 文件夹）全部重命名为 `中文名 作者名` 的格式，其余搜索不到的文件则不做修改
-
-支持的替换信息：
+`format` 支持的替换信息：
 - `name`: 日文标题
 - `namecn`: 中文标题
 - `author`: 作者名字
