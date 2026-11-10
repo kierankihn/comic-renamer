@@ -78,7 +78,9 @@ def get_comic_name(name: str, format_str: str, use_tw_press: bool) -> Optional[s
         if item['relation'] == '出版社' and (base_info['press'] is None or (use_tw_press and item['name'] in tw_press)):
             base_info['press'] = item['name']
 
-    if any(value is None and key in format_str for key, value in base_info.items()):
+    # Match full "{key}" placeholders: a plain substring check would treat
+    # the "name" key as required by a "{namecn}"-only format string.
+    if any(value is None and f"{{{key}}}" in format_str for key, value in base_info.items()):
         return None
 
     return format_str.format(**base_info)
